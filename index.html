@@ -59,7 +59,6 @@
             background: rgba(0, 0, 0, 0.4);
         }
 
-        /* Particle Background */
         .particles {
             display: none;
         }
@@ -85,7 +84,6 @@
             }
         }
 
-        /* Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -145,7 +143,6 @@
             }
         }
 
-        /* Scroll Progress Bar */
         .scroll-progress {
             position: fixed;
             top: 0;
@@ -317,7 +314,6 @@
             line-height: 1.6;
         }
 
-        /* Skills Section */
         .skills-section {
             margin-bottom: 50px;
             opacity: 0;
@@ -565,7 +561,6 @@
             display: none;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .name {
                 font-size: 32px;
@@ -587,35 +582,29 @@
     </style>
 </head>
 <body>
-    <!-- Video Background -->
     <div class="video-background">
         <video autoplay muted loop playsinline>
             <source src="https://raw.githubusercontent.com/v3shn/v3shn.github.io/05668c6c1d46347384b141054c5b230320060672/Night_Scenery_Video_Generation.mp4" type="video/mp4">
         </video>
     </div>
 
-    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-text" id="loadingText">Welcome</div>
     </div>
 
-    <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Particle Background -->
     <div class="particles" id="particles"></div>
 
-    <!-- Indian Time Display -->
     <div class="time-display" id="timeDisplay"></div>
 
-    <!-- Home Page -->
     <div class="page active" id="homePage">
         <div class="container">
             <div class="profile-section">
                 <img src="https://raw.githubusercontent.com/v3shn/web2/ad7f6b9dc70bf47dea9b60d291251215446d283d/1762082384710.jpg" 
-                     alt="Vishnu Prasad" 
-                     class="profile-picture" 
-                     id="profilePic">
+                    alt="Vishnu Prasad" 
+                    class="profile-picture" 
+                    id="profilePic">
                 <div class="click-hint">{click on image}</div>
                 <h1 class="name">VISHNU PRASAD</h1>
                 <div class="motto">
@@ -662,7 +651,6 @@
         </footer>
     </div>
 
-    <!-- Contact Page -->
     <div class="page" id="contactPage">
         <div class="container contact-page">
             <h1>Contact Me</h1>
@@ -680,14 +668,14 @@
 
                 <a href="mailto:v3shn@yahoo.com" class="contact-icon">
                     <img src="https://raw.githubusercontent.com/v3shn/web2/1d82f9d7aaee85ce130d1d505a74777cc75bc5b2/yahoo.png" alt="Email">
-                    <span>v3shn@yahoo.com</span>
+                    <span>Yahoo!</span>
                 </a>
             </div>
 
             <button class="back-button" id="backBtn">← Back to Home</button>
         </div>
         <footer>
-            DESIGNED BY | VISHNU PRASAD @2025
+            DESIGNED BY | VISHNU PRASAD @2025 | All rights reserved
         </footer>
     </div>
 
@@ -709,7 +697,6 @@
         const particlesContainer = document.getElementById('particles');
         let isPlaying = false;
 
-        // Loading Screen with Multiple Languages
         const welcomeMessages = [
             { text: 'Welcome', lang: 'en' },
             { text: 'ようこそ', lang: 'ja' },
@@ -740,13 +727,10 @@
             setTimeout(cycleWelcomeMessages, 800);
         });
 
-        // Create Particles - Disabled
         function createParticles() {
-            // Particles removed as per request
         }
         createParticles();
 
-        // Update Indian Time
         function updateTime() {
             const now = new Date();
             const options = {
@@ -763,14 +747,12 @@
         updateTime();
         setInterval(updateTime, 1000);
 
-        // Scroll Progress Bar
         window.addEventListener('scroll', () => {
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (window.scrollY / windowHeight) * 100;
             scrollProgress.style.width = scrolled + '%';
         });
 
-        // Profile Picture Music Control
         profilePic.addEventListener('click', function() {
             if (!isPlaying) {
                 bgMusic.play();
@@ -783,7 +765,6 @@
             }
         });
 
-        // Contact Button with Ripple Effect
         contactBtn.addEventListener('click', function(e) {
             homePage.classList.add('fade-out');
             setTimeout(() => {
