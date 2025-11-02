@@ -6,7 +6,7 @@
     <title>Vishnu Prasad - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Momo+Signature&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Momo+Signature&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Fredoka:wght@300..700&family=Mochiy+Pop+One&family=Baloo+Chettan+2:wght@400..800&family=Karla+Tamil+Inclined:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -23,6 +23,7 @@
             position: relative;
             overflow-x: hidden;
             color: white;
+            cursor: default;
         }
 
         body::before {
@@ -41,6 +42,104 @@
             z-index: -1;
         }
 
+        /* Particle Background */
+        .particles {
+            display: none;
+        }
+
+        .particle {
+            display: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-text {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 36px;
+            color: white;
+            letter-spacing: 2px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .loading-text[data-lang="en"] {
+            font-family: 'Momo Signature', cursive;
+            font-size: 48px;
+        }
+
+        .loading-text[data-lang="ja"] {
+            font-family: 'Mochiy Pop One', sans-serif;
+            font-size: 38px;
+        }
+
+        .loading-text[data-lang="ml"] {
+            font-family: 'Baloo Chettan 2', cursive;
+            font-size: 40px;
+        }
+
+        .loading-text[data-lang="ta"] {
+            font-family: 'Karla Tamil Inclined', serif;
+            font-size: 40px;
+        }
+
+        .loading-text.fade-out-text {
+            animation: fadeOutText 0.5s ease forwards;
+        }
+
+        @keyframes fadeOutText {
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            z-index: 9998;
+            transition: width 0.1s ease;
+        }
+
         .time-display {
             position: fixed;
             top: 20px;
@@ -53,6 +152,7 @@
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         .page {
@@ -61,6 +161,8 @@
             min-height: 100vh;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
+            position: relative;
+            z-index: 1;
         }
 
         .page.active {
@@ -93,13 +195,27 @@
             border: 3px solid rgba(255, 255, 255, 0.3);
             margin: 0 auto 15px;
             cursor: pointer;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: all 0.3s ease;
             object-fit: cover;
+            position: relative;
         }
 
         .profile-picture:hover {
             transform: scale(1.05);
             border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .profile-picture.playing {
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes musicPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .click-hint {
@@ -116,6 +232,28 @@
             margin-bottom: 30px;
             letter-spacing: 3px;
             font-family: 'Bitcount Grid Single', monospace;
+            overflow: hidden;
+            border-right: 3px solid rgba(255, 255, 255, 0.75);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 0.75);
+            }
         }
 
         .motto {
@@ -133,6 +271,19 @@
         .about-section {
             text-align: center;
             margin-bottom: 50px;
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.5s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .about-section h2 {
@@ -149,6 +300,56 @@
             line-height: 1.6;
         }
 
+        /* Skills Section */
+        .skills-section {
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.7s;
+        }
+
+        .skills-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .skill-name {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
         .contact-button {
             display: inline-block;
             padding: 15px 40px;
@@ -161,7 +362,26 @@
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .contact-button:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .contact-button:hover {
@@ -170,9 +390,16 @@
             transform: translateY(-2px);
         }
 
+        .contact-button span {
+            position: relative;
+            z-index: 1;
+        }
+
         .button-container {
             text-align: center;
             margin-top: 40px;
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.9s;
         }
 
         .contact-page {
@@ -207,18 +434,40 @@
             flex-direction: column;
             align-items: center;
             min-width: 150px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .contact-icon:hover::before {
+            left: 100%;
         }
 
         .contact-icon:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.05);
         }
 
         .contact-icon img {
             width: 70px;
             height: 70px;
             margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-icon:hover img {
+            transform: rotate(360deg);
         }
 
         .contact-icon span {
@@ -244,6 +493,7 @@
         .back-button:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.4);
+            transform: translateX(-5px);
         }
 
         footer {
@@ -287,19 +537,50 @@
 
         @keyframes pulse {
             0%, 100% {
-                transform: scale(1);
+                opacity: 1;
             }
             50% {
-                transform: scale(1.03);
+                opacity: 0.5;
             }
         }
 
         audio {
             display: none;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 32px;
+                animation: none;
+                border-right: none;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .time-display {
+                font-size: 14px;
+                padding: 8px 15px;
+                top: 15px;
+                right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-text" id="loadingText">Welcome</div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
     <!-- Indian Time Display -->
     <div class="time-display" id="timeDisplay"></div>
 
@@ -324,8 +605,32 @@
                 <p>Traveller, Open-source maintainer, Tech Explorer</p>
             </div>
 
+            <div class="skills-section">
+                <h2>Skills & Interests</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon">💻</div>
+                        <div class="skill-name">Coding</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🌐</div>
+                        <div class="skill-name">Web Dev</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🚀</div>
+                        <div class="skill-name">Innovation</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🔧</div>
+                        <div class="skill-name">Open Source</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="button-container">
-                <button class="contact-button" id="contactBtn">Contact Me</button>
+                <button class="contact-button" id="contactBtn">
+                    <span>Contact Me</span>
+                </button>
             </div>
         </div>
         <footer>
@@ -351,7 +656,7 @@
 
                 <a href="mailto:v3shn@yahoo.com" class="contact-icon">
                     <img src="https://raw.githubusercontent.com/v3shn/web2/1d82f9d7aaee85ce130d1d505a74777cc75bc5b2/yahoo.png" alt="Email">
-                    <span>Yahoo!</span>
+                    <span>v3shn@yahoo.com</span>
                 </a>
             </div>
 
@@ -374,7 +679,48 @@
         const homePage = document.getElementById('homePage');
         const contactPage = document.getElementById('contactPage');
         const timeDisplay = document.getElementById('timeDisplay');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const loadingText = document.getElementById('loadingText');
+        const scrollProgress = document.getElementById('scrollProgress');
+        const particlesContainer = document.getElementById('particles');
         let isPlaying = false;
+
+        // Loading Screen with Multiple Languages
+        const welcomeMessages = [
+            { text: 'Welcome', lang: 'en' },
+            { text: 'ようこそ', lang: 'ja' },
+            { text: 'സ്വാഗതം', lang: 'ml' },
+            { text: 'நல்வரவு', lang: 'ta' }
+        ];
+        let currentIndex = 0;
+
+        function cycleWelcomeMessages() {
+            if (currentIndex < welcomeMessages.length) {
+                loadingText.classList.add('fade-out-text');
+                setTimeout(() => {
+                    currentIndex++;
+                    if (currentIndex < welcomeMessages.length) {
+                        loadingText.textContent = welcomeMessages[currentIndex].text;
+                        loadingText.setAttribute('data-lang', welcomeMessages[currentIndex].lang);
+                        loadingText.classList.remove('fade-out-text');
+                        setTimeout(cycleWelcomeMessages, 800);
+                    } else {
+                        loadingScreen.classList.add('hidden');
+                    }
+                }, 500);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            loadingText.setAttribute('data-lang', 'en');
+            setTimeout(cycleWelcomeMessages, 800);
+        });
+
+        // Create Particles - Disabled
+        function createParticles() {
+            // Particles removed as per request
+        }
+        createParticles();
 
         // Update Indian Time
         function updateTime() {
@@ -393,17 +739,28 @@
         updateTime();
         setInterval(updateTime, 1000);
 
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Profile Picture Music Control
         profilePic.addEventListener('click', function() {
             if (!isPlaying) {
                 bgMusic.play();
                 isPlaying = true;
+                profilePic.classList.add('playing');
             } else {
                 bgMusic.pause();
                 isPlaying = false;
+                profilePic.classList.remove('playing');
             }
         });
 
-        contactBtn.addEventListener('click', function() {
+        // Contact Button with Ripple Effect
+        contactBtn.addEventListener('click', function(e) {
             homePage.classList.add('fade-out');
             setTimeout(() => {
                 homePage.classList.remove('active', 'fade-out');
@@ -423,4 +780,3 @@
     </script>
 </body>
 </html>
-
