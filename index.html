@@ -26,20 +26,37 @@
             cursor: default;
         }
 
-        body::before {
-            content: '';
+        .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://raw.githubusercontent.com/v3shn/web2/ad7f6b9dc70bf47dea9b60d291251215446d283d/1762082384710.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            filter: blur(8px);
-            opacity: 0.25;
             z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            filter: blur(3px);
+            opacity: 0.3;
+        }
+
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
         }
 
         /* Particle Background */
@@ -570,6 +587,13 @@
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="https://raw.githubusercontent.com/v3shn/v3shn.github.io/05668c6c1d46347384b141054c5b230320060672/Night_Scenery_Video_Generation.mp4" type="video/mp4">
+        </video>
+    </div>
+
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-text" id="loadingText">Welcome</div>
